@@ -21,12 +21,12 @@ skip_untracked = false
 [commit_types]
 
 [changelog]
-authors = [] 
-path = "CHANGELOG.md" 
-template = "default" # to change to remote set repository to repository name
-# repository = "repo-template-ansible-role"
-# remote = "github.com"
-# owner = "wittdennis"
+authors = []
+owner = "wittdennis"
+path = "CHANGELOG.md"
+remote = "github.com"
+repository = "ansible-role-kubeadm-join"
+template = "remote"
 
 [bump_profiles]
 

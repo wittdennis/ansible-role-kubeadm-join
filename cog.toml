@@ -10,7 +10,7 @@ post_bump_hooks = [
 ]
 post_package_bump_hooks = []
 pre_bump_hooks = [
-  # "echo 'bumping from {{latest}} to {{version}}'",
+  "echo 'bumping from {{latest}} to {{version}}'",
 ]
 pre_package_bump_hooks = []
 skip_ci = "[skip ci]"

@@ -1,3 +1,4 @@
 ---
 # defaults file for roles/kubeadm_join
 kubeadm_join_join_configuration: {}
+kubeadm_join_external_etcd: false

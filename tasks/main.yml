@@ -14,7 +14,17 @@
   tags:
     - kubeadm_join
 
+- name: Create kubelet conf stat dictionary
+  run_once: true
+  delegate_to: localhost
+  ansible.builtin.set_fact:
+    kubelet_conf_stat_dict: "{{ dict(keys | zip(values)) }}"
+  vars:
+    keys: "{{ ansible_play_hosts }}"
+    values: "{{ ansible_play_hosts | map('extract', hostvars, ['kubelet_conf', 'stat', 'exists']) | list }}"
+
 - name: Set gen_join_token when not joined host is found
+  when: not (kubelet_conf_stat_dict.values() | list is all)
   ansible.builtin.set_fact:
     gen_join_token: true
   run_once: true
@@ -112,7 +122,7 @@
 
 - name: Run kubeadm join (with defaults)
   ansible.builtin.command: "{{ kubeadm_join_cmd.stdout }}"
-  when: not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length == 0
+  when: gen_join_token and not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length == 0
   register: default_join_command
   changed_when: default_join_command.rc == 0
   tags:
@@ -123,12 +133,12 @@
     src: "kubeadm-config.yaml.j2"
     dest: /tmp/kubeadm-config.yaml
     mode: "0644"
-  when: not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
+  when: gen_join_token and not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
   tags:
     - kubeadm_join
 
 - name: Split join command
-  when: not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
+  when: gen_join_token and not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
@@ -142,7 +152,7 @@
     - kubeadm_join
 
 - name: Update config with join command values
-  when: not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
+  when: gen_join_token and not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
   register: enrich_join_config
   changed_when: enrich_join_config.rc == 0
   ansible.builtin.command:
@@ -160,7 +170,7 @@
 
 - name: Run kubeadm join (with custom config)
   ansible.builtin.command: "kubeadm join --config /tmp/kubeadm-config.yaml"
-  when: not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
+  when: gen_join_token and not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length > 0
   register: config_join_command
   changed_when: "'This node has joined the cluster' in config_join_command.stdout"
   tags:

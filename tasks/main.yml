@@ -33,6 +33,83 @@
   tags:
     - kubeadm_join
 
+- name: Retrieve certificates from first control plane
+  when: gen_join_token and inventory_hostname == groups["kubernetes_control_plane"][0]
+  tags:
+    - kubeadm_join
+  block:
+    - name: Fetch CA cert
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/ca.crt
+        dest: /tmp/kubernetes/pki/ca.crt
+        flat: true
+
+    - name: Fetch CA private key
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/ca.key
+        dest: /tmp/kubernetes/pki/ca.key
+        flat: true
+
+    - name: Fetch sa cert
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/sa.pub
+        dest: /tmp/kubernetes/pki/sa.pub
+        flat: true
+
+    - name: Fetch sa private key
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/sa.key
+        dest: /tmp/kubernetes/pki/sa.key
+        flat: true
+
+    - name: Fetch front-proxy CA cert
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/front-proxy-ca.crt
+        dest: /tmp/kubernetes/pki/front-proxy-ca.crt
+        flat: true
+
+    - name: Fetch front-proxy CA private key
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/front-proxy-ca.key
+        dest: /tmp/kubernetes/pki/front-proxy-ca.key
+        flat: true
+
+    - name: Fetch etcd CA cert
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/etcd/ca.crt
+        dest: /tmp/kubernetes/pki/etcd/ca.crt
+        flat: true
+
+    - name: Fetch etcd CA private key
+      when: not kubeadm_join_external_etcd
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/pki/etcd/ca.key
+        dest: /tmp/kubernetes/pki/etcd/ca.key
+        flat: true
+
+- name: Copy certificates to control planes
+  when: gen_join_token and inventory_hostname in groups["kubernetes_control_plane"] and not inventory_hostname == groups["kubernetes_control_plane"][0]
+  tags:
+    - kubeadm_join
+  ansible.builtin.copy:
+    src: /tmp/kubernetes/
+    dest: /etc/kubernetes/
+    mode: "0644"
+    owner: root
+    group: root
+    force: true
+    directory_mode: "0755"
+
+- name: Cleanup local certificate tmp files
+  delegate_to: localhost
+  run_once: true
+  become: false
+  tags:
+    - kubeadm_join
+  ansible.builtin.file:
+    path: /tmp/kubernetes
+    state: absent
+
 - name: Run kubeadm join (with defaults)
   ansible.builtin.command: "{{ kubeadm_join_cmd.stdout }}"
   when: not kubelet_conf.stat.exists and kubeadm_join_join_configuration|length == 0

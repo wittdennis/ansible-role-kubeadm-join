@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Dennis Witt
   description: Ansible role to join a node to a kubeadm managed kubernetes cluster

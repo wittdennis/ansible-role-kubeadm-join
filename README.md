@@ -11,6 +11,7 @@ In order to generate join tokens the role tries to delegate the generation to a 
 ```yaml
 # see: https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta3/#kubeadm-k8s-io-v1beta3-JoinConfiguration
 kubeadm_join_join_configuration: {} # defaults to empty
+kubeadm_join_external_etcd: false # Set to true if an externally managed etcd is used
 ```
 
 ## Example Playbook

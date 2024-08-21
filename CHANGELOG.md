@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [1.1.0](https://github.com/wittdennis/ansible-role-kubeadm-join/compare/ed45cdf5185b118ad1acc3804d39528caa33235a..1.1.0) - 2024-08-21
+#### Documentation
+- added external etcd variable to README - ([6f8057e](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/6f8057eb8a4215e768a76498d7ddc1c98c9e34b1)) - Dennis Witt
+#### Features
+- synchronize control plane certificates so we are able to join control nodes - ([dc122de](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/dc122dec76e96de1974f92a23b4d6e55bdb529fe)) - Dennis Witt
+#### Miscellaneous Chores
+- **(deps)** update softprops/action-gh-release action to v2.0.8 - ([6d45e8b](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/6d45e8b26182b008c85d0c1e6d68c6b71a8d5d58)) - wittdennis-renovate[bot]
+- **(deps)** update softprops/action-gh-release action to v2.0.7 - ([e5e3fe0](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/e5e3fe0a8abfc91c95e8af5445256603ef9c8972)) - wittdennis-renovate[bot]
+- **(deps)** update ansible/ansible-lint action to v24.7.0 - ([d83dc6b](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/d83dc6ba8521c61c78364a20c1545cd2d95359e2)) - wittdennis-renovate[bot]
+- improve running conditions for tasks only when joining is needed - ([0e4df3e](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/0e4df3eceef657b36e075de9f186811e032dc096)) - Dennis Witt
+- set platforms for ansible galaxy - ([a9dc7be](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/a9dc7bed7c93d5ccc615ea1c7c1a155bb15ca0ac)) - Dennis Witt
+- re-enable pre bump hook for cog - ([ed45cdf](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/ed45cdf5185b118ad1acc3804d39528caa33235a)) - Dennis Witt
+#### Style
+- add pre-commit config - ([0725eda](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/0725eda9c99c010db46a8f0591e23a0217682d9c)) - Dennis Witt
+
+- - -
+
 ## [1.0.0](https://github.com/wittdennis/ansible-role-kubeadm-join/compare/2aa5a49483f6082d80cf1e4ba04dada3875cc835..1.0.0) - 2024-06-29
 #### Continuous Integration
 - set conventional commit check to warn and only since latest tag - ([9a7572f](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/9a7572f81c4b50b2075250b9dae1b4daab396753)) - Dennis Witt

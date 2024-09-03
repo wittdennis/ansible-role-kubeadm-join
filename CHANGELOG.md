@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [1.1.1](https://github.com/wittdennis/ansible-role-kubeadm-join/compare/d8a66df392a9c73b2d28098e6dc5745f72feaa8c..1.1.1) - 2024-09-03
+#### Bug Fixes
+- bump kubeadm config version to v1beta4 - ([9fced87](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/9fced87b90fefa1ba4b02984732c90ea4a93ed7b)) - Dennis Witt
+#### Miscellaneous Chores
+- remove unused pre-commit dependency - ([d8a66df](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/d8a66df392a9c73b2d28098e6dc5745f72feaa8c)) - Dennis Witt
+
+- - -
+
 ## [1.1.0](https://github.com/wittdennis/ansible-role-kubeadm-join/compare/ed45cdf5185b118ad1acc3804d39528caa33235a..1.1.0) - 2024-08-21
 #### Documentation
 - added external etcd variable to README - ([6f8057e](https://github.com/wittdennis/ansible-role-kubeadm-join/commit/6f8057eb8a4215e768a76498d7ddc1c98c9e34b1)) - Dennis Witt
